@@ -37,3 +37,6 @@ A seguir, uma ilustração do problema:
 
 #### Após o ```replace()```: 
 ![apos o replace](./images/image-1.png)
+
+## Projeto em grupo
+Link do repositorio do projeto em grupo: [aqui.](https://github.com/GabrielPz/to-do-list-javascript).
