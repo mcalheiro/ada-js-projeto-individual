@@ -28,7 +28,7 @@ bodyTemplate = `
 /**
  * Verifica se o dia atual eh segunda-feira
  * @param {boolean} [force=false] Quando verdadeiro, forca uma segunda-feira
-* @returns {boolean} Se o dia atual eh segunda-feira
+ * @returns {boolean} Se o dia atual eh segunda-feira
  */
 function todayIsMonday(force=false) {
     let date = new Date();
