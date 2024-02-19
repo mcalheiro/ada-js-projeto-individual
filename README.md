@@ -33,7 +33,7 @@ node car-store.js
 A seguir, uma ilustração do problema:
 
 #### Antes do ```replace()```: 
-![antes do replace](image.png)
+![antes do replace](./images/image.png)
 
 #### Após o ```replace()```: 
-![apos o replace](image-1.png)
+![apos o replace](./images/image-1.png)
