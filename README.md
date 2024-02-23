@@ -38,5 +38,20 @@ A seguir, uma ilustração do problema:
 #### Após o ```replace()```: 
 ![apos o replace](./images/image-1.png)
 
+### Como utilizar
+No terminal, navegue ao diretorio que contem os arquivos ```car-store.js``` e ```envia-email.js``` e rode:
+```bash
+node car-store.js
+```
+Note que, caso a data real nao seja uma segunda-feira, a saida deve
+```bash
+Hoje não é dia de enviar emails.
+```
+Neste caso, utilize o comando a seguir
+```bash
+node car-store.js --force
+```
+Ao utilizar este comando, sera simulada uma segunda-feira e os emails serao disparados.
+
 ## Projeto em grupo
 Link do repositorio do projeto em grupo: [aqui.](https://github.com/GabrielPz/to-do-list-javascript).

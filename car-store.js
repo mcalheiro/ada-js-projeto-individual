@@ -1,6 +1,8 @@
-const enviarEmail = require('./envia-email');
+const enviarEmail = require('./envia-email')
 
-clientsList = [
+args = process.argv.slice(2)
+
+const clientsList = [
     {'name': 'Walter', 'email': 'walter@brba.com', 'send': true},
     {'name': 'Jesse', 'email': 'jesse@brba.com', 'send': true},
     {'name': 'Gus', 'email': 'gus@brba.com', 'send': false},
@@ -10,7 +12,7 @@ clientsList = [
     {'name': 'Saul', 'email': 'saul@brba.com', 'send': false},
 ];
 
-bodyTemplate = `
+let bodyTemplate = `
                 Olá <clientName>,
 
                 Esperamos que esta mensagem o(a) encontre bem.
@@ -26,18 +28,25 @@ bodyTemplate = `
                 Com nossos melhores cumprimentos,`
 
 /**
+ * Verifica se o foi passado o argumento "--force"
+ * @param {Array} args_list O array de argumentos passados no terminal
+ * @returns {boolean} Se existe o argumento "--force" existe ou nao
+ */
+function forceDate(args_list) {
+    return args_list.includes("--force")
+}
+
+/**
  * Verifica se o dia atual eh segunda-feira
  * @param {boolean} [force=false] Quando verdadeiro, forca uma segunda-feira
  * @returns {boolean} Se o dia atual eh segunda-feira
  */
-function todayIsMonday(force=false) {
-    let date = new Date();
-    
+function todayIsMonday(force) {
     if (force) {
-        new Date(2024, 1, 19);
+        return true
     }
-    
-    return date.getDay() == 1;
+    let date = new Date()
+    return date.getDay() == 1
 }
 
 /**
@@ -53,23 +62,23 @@ function generateBody(template, clientName) {
 /**
  * 
  * @param {Object} clients Uma lista de clientes
- * @param {CallableFunction} itsMonday Uma funcao que verifica se eh dia de enviar emails 
- * @param {boolean} forceDate Serve como parametro para a funcao 
+ * @param {boolean} itsMonday Uma funcao que verifica se eh dia de enviar emails 
  * @returns {string} As informacoes dos clientes cadastrados que nao recebem emails [FEAT ADICIONAL]
  */
-function sendEmails(clients, itsMonday, forceDate) {
+function sendEmails(clients, itsMonday) {
     let clientsOptIn = clients.filter(client => client.send === true)
     let clientsOptOut = clients.filter(client => client.send != true)
-    if (itsMonday(forceDate)) {
-        for (client of clientsOptIn) {
+    if (itsMonday) {
+        for (const client of clientsOptIn) {
             let body = generateBody(bodyTemplate, client.name)
             let subject = 'Novidades da semana na CarStore!'
             console.log(enviarEmail(client.email, subject, body))
         }
+        console.log("\nPor tente convencer os seguintes clientes a receber nossas novidades:")
+        return clientsOptOut.map(client => `${client.name}: ${client.email}`).join('\n')
     }
-    console.log("\nPor tente convencer os seguintes clientes a receber nossas novidades:");
-    return clientsOptOut.map(client => `${client.name}: ${client.email}`).join('\n');
+    return "Hoje não é dia de enviar emails."
 }
 
 // Chamada das funcoes
-console.log(sendEmails(clientsList, todayIsMonday, true))
+console.log(sendEmails(clientsList, todayIsMonday(forceDate(args))))
